@@ -2,11 +2,18 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * Class TypeSet defines a Type, as well as which types that Type is strong and weak against
+ */
 public class TypeSet {
   private Type type;
   private ArrayList<Type> strength;
   private ArrayList<Type> weakness;
 
+  /**
+   * Constructor for the TypeSet class taking in a Type object
+   * @param type Type: Type defining the TypeSet
+   */
   public TypeSet(Type type) {
     this.type = type;
     this.strength = new ArrayList<>();
@@ -56,7 +63,25 @@ public class TypeSet {
     }
   }
 
-  public TypeSet(String type) {
+  /**
+   * Constructor for the TypeSet class taking in a String object (case sensitive)
+   * @param type String: string representation of a type (case sensitive)
+   * @throws IllegalArgumentException when the input argument does not match an allowable type:
+   *  normal, water, grass, fire, rock, electric, bug. This is case sensitive
+   */
+  public TypeSet(String type) throws IllegalArgumentException {
+    ArrayList<String> types = new ArrayList<>();
+    types.add("normal");
+    types.add("water");
+    types.add("grass");
+    types.add("fire");
+    types.add("rock");
+    types.add("electric");
+    types.add("bug");
+
+    if(!types.contains(type)) {
+      throw new IllegalArgumentException("Please enter an available type");
+    }
     this.strength = new ArrayList<>();
     this.weakness = new ArrayList<>();
 
@@ -107,18 +132,40 @@ public class TypeSet {
       //weaknesses
       this.weakness.add(Type.ROCK);
       this.weakness.add(Type.FIRE);
+    } else if(type == "normal") {
+      this.type = Type.NORMAL;
     }
   }
 
+  /**
+   * Method getType() returns the type property of this TypeSet
+   * @return Type: type property of this TypeSet
+   */
   public Type getType() {
     return this.type;
   }
 
+  /**
+   * Method getStrength() returns the strength property of this TypeSet
+   * @return ArrayList<Type>: strength property of this TypeSet
+   */
   public ArrayList<Type> getStrength() {
-    return this.strength;
+    ArrayList<Type> strengths = new ArrayList<>();
+    for(Type t : this.strength) {
+      strengths.add(t);
+    }
+    return strengths;
   }
 
+  /**
+   * Method getWeakness() returns the getWeakness property of this TypeSet
+   * @return ArrayList<Type>: getWeakness property of this TypeSet
+   */
   public ArrayList<Type> getWeakness() {
-    return this.weakness;
+    ArrayList<Type> weaks = new ArrayList<>();
+    for(Type t : this.weakness) {
+      weaks.add(t);
+    }
+    return weaks;
   }
 }

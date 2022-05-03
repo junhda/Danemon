@@ -13,7 +13,7 @@ public class Battle implements IBattleModel {
   /**
    * Constructor for the Battle class
    * @param level int: Difficulty level
-   * @throws IllegalArgumentException when difficulty level < 0 or > 3
+   * @throws IllegalArgumentException when difficulty level < 1 or > 3
    */
   public Battle(int level) throws IllegalArgumentException {
     if(level < 1 || level > 3) {
@@ -64,8 +64,9 @@ public class Battle implements IBattleModel {
   /**
    * Method battleStart() initializes the battle by setting User and Enemy
    * players
-   * @return
+   * @return ArrayList<String>: Strings representing actions that occur during startup
    */
+  @Override
   public ArrayList<String> battleStart() {
     ArrayList<String> output = new ArrayList<>();
     ArrayList<String> userOutput = this.user.setNextBattlingPokemon();
@@ -88,8 +89,7 @@ public class Battle implements IBattleModel {
    * @throws IllegalStateException when isGameOver() == true
    */
   @Override
-  public ArrayList<IPlayer> getMovePriority()
-      throws IllegalStateException {
+  public ArrayList<IPlayer> getMovePriority() throws IllegalStateException {
     if(this.isGameOver() == true) {
       throw new IllegalStateException("The battle is over!");
     }

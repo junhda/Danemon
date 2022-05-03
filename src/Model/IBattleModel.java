@@ -27,6 +27,13 @@ public interface IBattleModel {
   public int getDifficulty();
 
   /**
+   * Method battleStart() initializes the battle by setting User and Enemy
+   * players
+   * @return ArrayList<String>: Strings representing actions that occur during startup
+   */
+  public ArrayList<String> battleStart();
+
+  /**
    * Method getMovePriority() returns an ordered ArrayList of Players that dictates which Player's
    * battling Pokemon attacks first and second
    * @return ArrayList<IPlayer>: order list of which IPlayer goes first then second

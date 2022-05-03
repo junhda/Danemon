@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+//DEFINE damageScaling 50
+
 public class PokemonImpl implements Pokemon {
   private String name;
   private TypeSet type;
@@ -11,7 +13,17 @@ public class PokemonImpl implements Pokemon {
   private StatsSet stats;
   private String imageURL;
   private ArrayList<Skill> skills;
+//  private static final int damageScale = 50;
 
+  /**
+   * Constructor for the PokemonImpl class with dedicated parameters
+   * for each property
+   * @param name String: name for the Pokemon object
+   * @param type TypeSet: type for the Pokemon object
+   * @param stats StatsSet: stats for the Pokemon object
+   * @param imageURL String: absolute URL to PNG image for the Pokemon object
+   * @param skills ArrayList<Skill>: skills for the Pokemon object to attack with
+   */
   public PokemonImpl(String name, TypeSet type, StatsSet stats,
       String imageURL, ArrayList<Skill> skills) {
     this.name = name;
@@ -25,11 +37,25 @@ public class PokemonImpl implements Pokemon {
     }
   }
 
-  public PokemonImpl(String name, TypeSet type, String imageURL, int indexScale) {
+  /**
+   * Constructor for the PokemonImpl class.
+   * Randomly assigns Skills based on the type parameter, and StatsSet based
+   * on the indexSccale parameter
+   * @param name String: name for the Pokemon object
+   * @param type TypeSet: type for the Pokemon object
+   * @param imageURL String: absolute URL to PNG image for the Pokemon object
+   * @param indexScale int: scalar value to act as upper bound for StatsSet
+   * @throws IllegalArgumentException when indexScale < 1 or indexScale > 3
+   */
+  public PokemonImpl(String name, TypeSet type, String imageURL, int indexScale) throws
+      IllegalArgumentException {
+    if(indexScale < 1 || indexScale > 3) {
+      throw new IllegalArgumentException("Expects index scale value between 1 - 3");
+    }
     this.name = name;
     this.type = type;
     this.status = Status.HOLD;
-    this.stats = new StatsSet(indexScale * 100);
+    this.stats = new StatsSet(indexScale);
     this.imageURL = imageURL;
 
     //create a random list of distinct skills for the Pokemon based on the type
@@ -113,6 +139,22 @@ public class PokemonImpl implements Pokemon {
   }
 
   /**
+   * Method getSkill() returns the Skill owned by the Pokemon with the matching
+   * parameter skill name. If the Pokemon does not know that skill, return null
+   * @param skill String: name of the skill to search for
+   * @return Skill: skill with matching name as the input. Returns null if not found
+   */
+  @Override
+  public Skill getSkill(String skill) {
+    for(Skill sk : this.skills) {
+      if(sk.getName() == skill) {
+        return sk;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Method getImageURL() returns the imageURL property of the Pokemon object
    * @return String: Pokemon Image URL
    */
@@ -161,8 +203,8 @@ public class PokemonImpl implements Pokemon {
       typeCoefficient = 1.3;
     }
 
-    return (int)(typeCoefficient * (attack.getPower() *
-        (1 + (userAttack - enemyDefense) / 50)));
+    return (int)(typeCoefficient * ((double)attack.getPower() *
+        ((double)userAttack / (double)enemyDefense)));
   }
 
   /**
@@ -175,6 +217,7 @@ public class PokemonImpl implements Pokemon {
    *    when running statChange()
    * @throws IllegalStateException when this Pokemon is not Battling
    */
+  @Override
   public ArrayList<String> statChange(double attackChange, double defenseChange,
       double speedChange) throws IllegalStateException {
     if(this.status != Status.BATTLING) {
@@ -186,9 +229,9 @@ public class PokemonImpl implements Pokemon {
       this.getStatsSet().setCurrentAttack((int)(this.getStatsSet().getCurrentAttack() *
           (1 + attackChange)));
       if(attackChange < 0.0) {
-        output.add(this.name + " attack fell!");
+        output.add(this.name + "'s attack fell!");
       } else {
-        output.add(this.name + " attack rose!");
+        output.add(this.name + "'s attack rose!");
       }
     }
     //apply defense change
@@ -196,9 +239,9 @@ public class PokemonImpl implements Pokemon {
       this.getStatsSet().setCurrentDefense((int)(this.getStatsSet().getCurrentDefense() *
           (1 + defenseChange)));
       if(defenseChange < 0.0) {
-        output.add(this.name + " defense fell!");
+        output.add(this.name + "'s defense fell!");
       } else {
-        output.add(this.name + " defense rose!");
+        output.add(this.name + "'s defense rose!");
       }
     }
     //apply speed change
@@ -206,9 +249,9 @@ public class PokemonImpl implements Pokemon {
       this.getStatsSet().setCurrentSpeed((int)(this.getStatsSet().getCurrentSpeed() *
           (1 + speedChange)));
       if(speedChange < 0.0) {
-        output.add(this.name + " speed fell!");
+        output.add(this.name + "'s speed fell!");
       } else {
-        output.add(this.name + " speed rose!");
+        output.add(this.name + "'s speed rose!");
       }
     }
     //return stat change strings
@@ -243,32 +286,27 @@ public class PokemonImpl implements Pokemon {
     int result;
     //calc damage
     int damage = this.damageCalc(attack, enemy);
+    System.out.println(attack.getName() + " did " + damage + " damage.");
 
     //apply damage
     ArrayList<String> enemyDamage = enemy.takeDamage(damage);
 
     //add enemy damage strings to output list
-    for(String s : enemyDamage) {
-      output.add(s);
-    }
+    output.addAll(enemyDamage);
 
     //apply buffs / debuffs
     ArrayList<String> userStatChange = this.statChange(attack.getUserAttackChange(),
         attack.getUserDefenseChange(), attack.getUserSpeedChange());
 
     //add user stat change strings to output list
-    for(String s : userStatChange) {
-      output.add(s);
-    }
+    output.addAll(userStatChange);
 
     if(enemy.getStatus() != Status.FAINTED) {
-      ArrayList<String> enemyStatChange = this.statChange(attack.getEnemyAttackChange(),
+      ArrayList<String> enemyStatChange = enemy.statChange(attack.getEnemyAttackChange(),
           attack.getEnemyDefenseChange(), attack.getEnemySpeedChange());
 
       //add enemy stat change strings to output list
-      for(String s : enemyStatChange) {
-        output.add(s);
-      }
+      output.addAll(enemyStatChange);
     }
 
     //return action result strings
@@ -276,11 +314,12 @@ public class PokemonImpl implements Pokemon {
   }
 
   /**
-   *
-   * @param damage
-   * @return
-   * @throws IllegalArgumentException
-   * @throws IllegalStateException
+   * Method takeDamage() applies damage to this Pokemon. If the currentHealth of this Pokemon
+   * goes down to 0, then the Pokemon's status changes to fainted
+   * @param damage Int: amount of damage to do to this Pokemon
+   * @return ArrayList<String>: list of Strings that represent actions that have occurred
+   * @throws IllegalArgumentException when damage value is negative
+   * @throws IllegalStateException when the Pokemon is not actively battling
    */
   @Override
   public ArrayList<String> takeDamage(int damage) throws IllegalArgumentException,

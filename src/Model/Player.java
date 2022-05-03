@@ -17,9 +17,13 @@ public class Player implements IPlayer {
    * Pokemon in the party
    * @param level int: Level parameter dictates potential strength of Pokemon
    * @return ArrayList<Pokemon> with 4 Pokemon objects
+   * @throws IllegalArgumentException when level < 1 or level > 3
    */
   @Override
-  public ArrayList<Pokemon> createParty(int level) {
+  public ArrayList<Pokemon> createParty(int level) throws IllegalArgumentException {
+    if(level < 1 || level > 3) {
+      throw new IllegalArgumentException("Expects level value between 1 - 3");
+    }
     ArrayList<Pokemon> party = new ArrayList<>();
     Pokedex dex = new Pokedex();
     int pokedexSize = dex.getPokedex().size();
@@ -27,7 +31,7 @@ public class Player implements IPlayer {
     //create parties of 4 Pokemon
     HashMap<String, String> pokemonEntry;
     String name, type, image;
-    for(int i = 0; i <= 4; i++) {
+    for(int i = 0; i < 4; i++) {
       // pokedex is 1 based index
       pokemonEntry = dex.getPokedex().get(rand.nextInt(pokedexSize) + 1);
       name = pokemonEntry.get("name");
@@ -44,9 +48,13 @@ public class Player implements IPlayer {
    * Constructor for the Player class.
    * Initializes Player's party with 4 distinct Pokemon objects, but does not yet set
    * the battling Pokemon
-   * @param level
+   * @param level int: Level parameter dictates potential strength of Pokemon
+   * @throws IllegalArgumentException when level < 1 or level > 3
    */
-  public Player(int level) {
+  public Player(int level) throws IllegalArgumentException {
+    if(level < 1 || level > 3) {
+      throw new IllegalArgumentException("Expects level value between 1 - 3");
+    }
     this.party = createParty(level);
 //    this.setNextBattlingPokemon();
   }
@@ -58,7 +66,11 @@ public class Player implements IPlayer {
    */
   @Override
   public ArrayList<Pokemon> getParty() {
-    return this.party;
+    ArrayList<Pokemon> partyCopy = new ArrayList<>();
+    for(Pokemon p : this.party) {
+      partyCopy.add(p);
+    }
+    return partyCopy;
   }
 
   /**
@@ -88,6 +100,12 @@ public class Player implements IPlayer {
     return this.battlingPokemon;
   }
 
+  /**
+   * Method getAttackSkills() returns the ArrayList of Skills of the battling Pokemon
+   * @return ArrayList<Skill>: </Skill>ArrayList of Skills of the battling Pokemon
+   * @throws IllegalStateException when the isAlive() == false
+   */
+  @Override
   public ArrayList<Skill> getAttackSkills() throws IllegalStateException {
     if(!this.isAlive()) {
       throw new IllegalStateException("The Player has lost!");
@@ -101,15 +119,18 @@ public class Player implements IPlayer {
    * @return ArrayList<String>: list of String outputs of the actions that occurred.
    *  Potential outputs include withdrawing the previous battling Pokemon that fainted
    *  and releasing the next battling Pokemon
-   * @throws IllegalStateException when the isAlive() == false
+   * @throws IllegalStateException when the isAlive() == false or when the current battling
+   *  Pokemon has not fainted
    */
   @Override
   public ArrayList<String> setNextBattlingPokemon() throws IllegalStateException {
     if(!this.isAlive()) {
       throw new IllegalStateException("The Player has lost!");
     }
-    if(this.battlingPokemon.getStatus() != Status.FAINTED) {
-      throw new IllegalStateException("The Battling Pokemon hasn't given up yet!");
+    if(this.battlingPokemon != null) {
+      if(this.battlingPokemon.getStatus() != Status.FAINTED) {
+        throw new IllegalStateException("The Battling Pokemon hasn't given up yet!");
+      }
     }
 
     ArrayList<String> output = new ArrayList<>();

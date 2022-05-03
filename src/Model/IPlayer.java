@@ -13,8 +13,9 @@ public interface IPlayer {
    * Pokemon in the party
    * @param level int: Level parameter dictates potential strength of Pokemon
    * @return ArrayList<Pokemon> with 4 Pokemon objects
+   * @throws IllegalArgumentException when level < 1 or level > 3
    */
-  public ArrayList<Pokemon> createParty(int level);
+  public ArrayList<Pokemon> createParty(int level) throws IllegalArgumentException;
 
   /**
    * Method setNextBattlingPokemon() updates the Player's battling Pokemon with
@@ -22,7 +23,8 @@ public interface IPlayer {
    * @return ArrayList<String>: list of String outputs of the actions that occurred.
    *  Potential outputs include withdrawing the previous battling Pokemon that fainted
    *  and releasing the next battling Pokemon
-   * @throws IllegalStateException when the isAlive() == false
+   * @throws IllegalStateException when the isAlive() == false or when the current battling
+   *  Pokemon has not fainted
    */
   public ArrayList<String> setNextBattlingPokemon() throws IllegalStateException;
 

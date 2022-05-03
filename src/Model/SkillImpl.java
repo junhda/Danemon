@@ -11,10 +11,26 @@ public class SkillImpl implements Skill {
   private double enemyDefenseChange;
   private double enemySpeedChange;
 
-
+  /**
+   * Constructor for class SkillImpl
+   * @param type TypeSet: type associated with the Skill
+   * @param name String: name of the Skill
+   * @param power Int: power value of the Skill for damage
+   * @param userAttackChange Double: percent change to user's attack
+   * @param userDefenseChange Double: percent change to user's defense
+   * @param userSpeedChange Double: percent change to user's speed
+   * @param enemyAttackChange Double: percent change to enemy's attack
+   * @param enemyDefenseChange Double: percent change to enemy's defense
+   * @param enemySpeedChange Double: percent change to enemy's speed
+   * @throws IllegalArgumentException when power value is negative
+   */
   public SkillImpl(TypeSet type, String name, int power,
       double userAttackChange, double userDefenseChange, double userSpeedChange,
-      double enemyAttackChange, double enemyDefenseChange, double enemySpeedChange) {
+      double enemyAttackChange, double enemyDefenseChange, double enemySpeedChange) throws
+      IllegalArgumentException {
+    if(power < 0) {
+      throw new IllegalArgumentException("Power value must be non-negative");
+    }
     this.type = type;
     this.name = name;
     this.power = power;
@@ -107,6 +123,27 @@ public class SkillImpl implements Skill {
     return this.enemySpeedChange;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if(o instanceof SkillImpl) {
+      SkillImpl other = (SkillImpl)o;
+      if(this.type.getType() == other.type.getType() &&
+      this.name == other.name &&
+      this.power == other.power &&
+      this.userAttackChange == other.userAttackChange &&
+      this.userDefenseChange == other.userDefenseChange &&
+      this.userSpeedChange == other.userSpeedChange &&
+      this.enemyAttackChange == other.enemyAttackChange &&
+      this.enemyDefenseChange == other.enemyDefenseChange &&
+      this.enemySpeedChange == other.enemySpeedChange) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 //  @Override
 //  public int damageCalc(Pokemon user, Pokemon enemy) {
 //    int userAttack = user.getStatsSet().getCurrentAttack();
