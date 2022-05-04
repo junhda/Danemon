@@ -163,7 +163,7 @@ public class View implements IView {
    * Method refreshFrame() will update the frame with the latest content that has been added
    */
   public void refreshFrame() {
-    frame.repaint(2);
+    frame.repaint();
   }
 
   /**

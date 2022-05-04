@@ -217,7 +217,7 @@ public class Controller implements IController, ActionListener {
 
       //add time lag to show text
       try {
-        Thread.sleep(2000);
+        Thread.sleep(1000);
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       }
