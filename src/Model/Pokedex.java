@@ -1,5 +1,8 @@
 package Model;
 import java.util.HashMap;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.File;
 
 /**
  * Class Pokedex creates a final Hashmap with the different varieties of
@@ -17,13 +20,17 @@ final public class Pokedex {
     // init variables
     int entryNumber = 1;
     this.pokedex = new HashMap<>();
+    File thisFile = new File("Pokedex.java");
+    Path p1 = Paths.get(thisFile.getAbsolutePath());
+    Path p2 = p1.getParent();
+    System.out.println(p1);
+    System.out.println(p2);
 
     //pokemon 1 - Bulbasaur
     HashMap<String, String> bulbasaur = new HashMap<>();
     bulbasaur.put("name", "Bulbasaur");
     bulbasaur.put("type", "grass");
-    bulbasaur.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/bulbasaur.jpeg");
+    bulbasaur.put("image", p2.toString() + "/danemons_resized/bulbasaur.jpeg");
     this.pokedex.put(entryNumber, bulbasaur);
     entryNumber++;
 
@@ -31,8 +38,7 @@ final public class Pokedex {
     HashMap<String, String> charmander = new HashMap<>();
     charmander.put("name", "Charmander");
     charmander.put("type", "fire");
-    charmander.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/charmander.jpeg");
+    charmander.put("image", p2.toString() + "/danemons_resized/charmander.jpeg");
     this.pokedex.put(entryNumber, charmander);
     entryNumber++;
 
@@ -40,8 +46,7 @@ final public class Pokedex {
     HashMap<String, String> squirtle = new HashMap<>();
     squirtle.put("name", "Squirtle");
     squirtle.put("type", "water");
-    squirtle.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/squirtle.jpeg");
+    squirtle.put("image", p2.toString() + "/danemons_resized/squirtle.jpeg");
     this.pokedex.put(entryNumber, squirtle);
     entryNumber++;
 
@@ -49,8 +54,7 @@ final public class Pokedex {
     HashMap<String, String> pikachu = new HashMap<>();
     pikachu.put("name", "Pikachu");
     pikachu.put("type", "electric");
-    pikachu.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/pikachu.jpg");
+    pikachu.put("image", p2.toString() + "/danemons_resized/pikachu.jpg");
     this.pokedex.put(entryNumber, pikachu);
     entryNumber++;
 
@@ -58,8 +62,7 @@ final public class Pokedex {
     HashMap<String, String> geodude = new HashMap<>();
     geodude.put("name", "Geodude");
     geodude.put("type", "rock");
-    geodude.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/geodude.jpeg");
+    geodude.put("image", p2.toString() + "/danemons_resized/geodude.jpeg");
     this.pokedex.put(entryNumber, geodude);
     entryNumber++;
 
@@ -67,8 +70,7 @@ final public class Pokedex {
     HashMap<String, String> jigglypuff = new HashMap<>();
     jigglypuff.put("name", "Jigglypuff");
     jigglypuff.put("type", "normal");
-    jigglypuff.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/jigglypuff.jpeg");
+    jigglypuff.put("image", p2.toString() + "/danemons_resized/jigglypuff.jpeg");
     this.pokedex.put(entryNumber, jigglypuff);
     entryNumber++;
 
@@ -76,8 +78,7 @@ final public class Pokedex {
     HashMap<String, String> butterfree = new HashMap<>();
     butterfree.put("name", "Butterfree");
     butterfree.put("type", "bug");
-    butterfree.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/butterfree.jpeg");
+    butterfree.put("image", p2.toString() + "/danemons_resized/butterfree.jpeg");
     this.pokedex.put(entryNumber, butterfree);
     entryNumber++;
 
@@ -85,8 +86,7 @@ final public class Pokedex {
     HashMap<String, String> scyther = new HashMap<>();
     scyther.put("name", "Scyther");
     scyther.put("type", "bug");
-    scyther.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/scyther.jpeg");
+    scyther.put("image", p2.toString() + "/danemons_resized/scyther.jpeg");
     this.pokedex.put(entryNumber, scyther);
     entryNumber++;
 
@@ -94,8 +94,7 @@ final public class Pokedex {
     HashMap<String, String> gyarados = new HashMap<>();
     gyarados.put("name", "Gyarados");
     gyarados.put("type", "water");
-    gyarados.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/gyarados.jpeg");
+    gyarados.put("image", p2.toString() + "/danemons_resized/gyarados.jpeg");
     this.pokedex.put(entryNumber, gyarados);
     entryNumber++;
 
@@ -103,8 +102,7 @@ final public class Pokedex {
     HashMap<String, String> arcanine = new HashMap<>();
     arcanine.put("name", "Arcanine");
     arcanine.put("type", "fire");
-    arcanine.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/arcanine.jpeg");
+    arcanine.put("image", p2.toString() + "/danemons_resized/arcanine.jpeg");
     this.pokedex.put(entryNumber, arcanine);
     entryNumber++;
 
@@ -112,8 +110,7 @@ final public class Pokedex {
     HashMap<String, String> jolteon = new HashMap<>();
     jolteon.put("name", "Jolteon");
     jolteon.put("type", "electric");
-    jolteon.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/jolteon.jpg");
+    jolteon.put("image", p2.toString() + "/danemons_resized/jolteon.jpg");
     this.pokedex.put(entryNumber, jolteon);
     entryNumber++;
 
@@ -121,8 +118,7 @@ final public class Pokedex {
     HashMap<String, String> vileplume = new HashMap<>();
     vileplume.put("name", "Vileplume");
     vileplume.put("type", "grass");
-    vileplume.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/vileplume.jpeg");
+    vileplume.put("image", p2.toString() + "/danemons_resized/vileplume.jpeg");
     this.pokedex.put(entryNumber, vileplume);
     entryNumber++;
 
@@ -130,8 +126,7 @@ final public class Pokedex {
     HashMap<String, String> rhydon = new HashMap<>();
     rhydon.put("name", "Rhydon");
     rhydon.put("type", "rock");
-    rhydon.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/CS5004/"
-        + "CS5004_Final_Project/danemons_resized/rhydon.jpeg");
+    rhydon.put("image", p2.toString() + "/danemons_resized/rhydon.jpeg");
     this.pokedex.put(entryNumber, rhydon);
     entryNumber++;
 
@@ -139,8 +134,7 @@ final public class Pokedex {
     HashMap<String, String> snorlax = new HashMap<>();
     snorlax.put("name", "Snorlax");
     snorlax.put("type", "normal");
-    snorlax.put("image", "/Users/dan/Documents/Documents/NORTHEASTERN/"
-        + "CS5004/CS5004_Final_Project/danemons_resized/snorlax.jpeg");
+    snorlax.put("image", p2.toString() + "/danemons_resized/snorlax.jpeg");
     this.pokedex.put(entryNumber, snorlax);
 //    entryNumber++;
 
