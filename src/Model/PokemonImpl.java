@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-//DEFINE damageScaling 50
-
 public class PokemonImpl implements Pokemon {
   private String name;
   private TypeSet type;
@@ -13,7 +11,6 @@ public class PokemonImpl implements Pokemon {
   private StatsSet stats;
   private String imageURL;
   private ArrayList<Skill> skills;
-//  private static final int damageScale = 50;
 
   /**
    * Constructor for the PokemonImpl class with dedicated parameters
@@ -286,7 +283,6 @@ public class PokemonImpl implements Pokemon {
     int result;
     //calc damage
     int damage = this.damageCalc(attack, enemy);
-    System.out.println(attack.getName() + " did " + damage + " damage.");
 
     //apply damage
     ArrayList<String> enemyDamage = enemy.takeDamage(damage);
@@ -341,15 +337,4 @@ public class PokemonImpl implements Pokemon {
 
     return output;
   }
-
-//  @Override
-//  public void withdraw() throws IllegalStateException {
-//    if(this.status != Status.BATTLING) {
-//      throw new IllegalStateException("Only the battling Pokemon can be withdrawn!");
-//    }
-//    if(this.status != Status.FAINTED) {
-//      this.setStatus(Status.HOLD);
-//    }
-//    this.stats.statReset();
-//  }
 }

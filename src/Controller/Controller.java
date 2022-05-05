@@ -5,7 +5,6 @@ import Model.IBattleModel;
 import Model.Pokemon;
 import Model.Skill;
 import Model.IPlayer;
-import View.View;
 import View.IView;
 
 import java.awt.event.ActionEvent;
@@ -89,12 +88,6 @@ public class Controller implements IController, ActionListener {
    */
   @Override
   public void startGame() {
-    //add time lag for after pressing the difficulty button
-//    try {
-//      Thread.sleep(1000);
-//    } catch (InterruptedException e) {
-//      Thread.currentThread().interrupt();
-//    }
     //start the battle in the Model
     ArrayList<String> start = this.model.battleStart();
 
@@ -122,9 +115,7 @@ public class Controller implements IController, ActionListener {
     }
 
     Skill attackMove = this.model.getUser().getAttackSkills().get(attackOption);
-    System.out.println("User attack choice: " + attackMove.getName());
     Skill enemyAttackMove = this.enemyAttackDecision();
-    System.out.println("Enemy attack choice: " + enemyAttackMove.getName());
     ArrayList<IPlayer> playerOrder = this.model.getMovePriority();
 
     Pokemon currentUserPokemon = this.model.getUser().getBattlingPokemon();
@@ -134,9 +125,6 @@ public class Controller implements IController, ActionListener {
       //user attacks
       ArrayList<String> userAttack = this.model.performAction(playerOrder.get(0),
           playerOrder.get(1), attackMove);
-      for(String s : userAttack) {
-        System.out.println(s);
-      }
       //insert view updates here
       this.attackView(userAttack);
 
@@ -144,9 +132,6 @@ public class Controller implements IController, ActionListener {
       if(this.model.getEnemy().getBattlingPokemon() == currentEnemyPokemon) {
         ArrayList<String> enemyAttack = this.model.performAction(playerOrder.get(1),
             playerOrder.get(0), enemyAttackMove);
-        for(String s : enemyAttack) {
-          System.out.println(s);
-        }
         //insert view updates here
         this.attackView(enemyAttack);
       }
@@ -155,9 +140,6 @@ public class Controller implements IController, ActionListener {
       //enemy attacks
       ArrayList<String> enemyAttack = this.model.performAction(playerOrder.get(0),
           playerOrder.get(1), enemyAttackMove);
-      for(String s : enemyAttack) {
-        System.out.println(s);
-      }
       //insert view updates here
       this.attackView(enemyAttack);
 
@@ -165,9 +147,6 @@ public class Controller implements IController, ActionListener {
       if(this.model.getUser().getBattlingPokemon() == currentUserPokemon) {
         ArrayList<String> userAttack = this.model.performAction(playerOrder.get(1),
             playerOrder.get(0), attackMove);
-        for(String s : userAttack) {
-          System.out.println(s);
-        }
         //insert view updates here
         this.attackView(userAttack);
       }
@@ -187,7 +166,7 @@ public class Controller implements IController, ActionListener {
   public void attackView(ArrayList<String> attackPrompts) {
     for(int i = 0; i < attackPrompts.size(); i++) {
       String attackPrompt = attackPrompts.get(i);
-//      System.out.println("Attack View Method: " + attackPrompts.get(i));
+      System.out.println(attackPrompt);
       //pull out user info from model
       String userPokemonURL = this.model.getUser().getBattlingPokemon().getImageURL();
       String userPokemonName = this.model.getUser().getBattlingPokemon().getName();
@@ -214,13 +193,6 @@ public class Controller implements IController, ActionListener {
 
       //refresh frame to latest state
       this.view.refreshFrame();
-
-      //add time lag to show text
-      try {
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
     }
   }
 }
