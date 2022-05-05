@@ -129,11 +129,13 @@ public class Controller implements IController, ActionListener {
       this.attackView(userAttack);
 
       //enemy attacks
-      if(this.model.getEnemy().getBattlingPokemon() == currentEnemyPokemon) {
-        ArrayList<String> enemyAttack = this.model.performAction(playerOrder.get(1),
-            playerOrder.get(0), enemyAttackMove);
-        //insert view updates here
-        this.attackView(enemyAttack);
+      if(this.model.isGameOver() == false) {
+        if (this.model.getEnemy().getBattlingPokemon() == currentEnemyPokemon) {
+          ArrayList<String> enemyAttack = this.model.performAction(playerOrder.get(1),
+              playerOrder.get(0), enemyAttackMove);
+          //insert view updates here
+          this.attackView(enemyAttack);
+        }
       }
 
     } else {
@@ -144,11 +146,13 @@ public class Controller implements IController, ActionListener {
       this.attackView(enemyAttack);
 
       //user attacks
-      if(this.model.getUser().getBattlingPokemon() == currentUserPokemon) {
-        ArrayList<String> userAttack = this.model.performAction(playerOrder.get(1),
-            playerOrder.get(0), attackMove);
-        //insert view updates here
-        this.attackView(userAttack);
+      if(this.model.isGameOver() == false) {
+        if (this.model.getUser().getBattlingPokemon() == currentUserPokemon) {
+          ArrayList<String> userAttack = this.model.performAction(playerOrder.get(1),
+              playerOrder.get(0), attackMove);
+          //insert view updates here
+          this.attackView(userAttack);
+        }
       }
     }
 
