@@ -23,8 +23,6 @@ final public class Pokedex {
     File thisFile = new File("Pokedex.java");
     Path p1 = Paths.get(thisFile.getAbsolutePath());
     Path p2 = p1.getParent();
-    System.out.println(p1);
-    System.out.println(p2);
 
     //pokemon 1 - Bulbasaur
     HashMap<String, String> bulbasaur = new HashMap<>();
